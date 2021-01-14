@@ -18,8 +18,8 @@ class QueryRoutes[F[_]: Sync](service: CatAlg[F])(implicit H: HttpErrorHandler[F
 
   val routes: HttpRoutes[F] = H.handle(HttpRoutes.of[F] {
     case GET -> Root / IntVar(id) =>
-      val trip = service.select(id)
-      trip.flatMap(_.fold(NotFound())(Ok(_)))
+      val cat = service.select(id)
+      cat.flatMap(_.fold(NotFound())(Ok(_)))
 
     case GET -> Root :? OptSort(sort) +& OptPage(page) +& OptPageSize(pageSize) =>
       service

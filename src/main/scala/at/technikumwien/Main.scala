@@ -17,7 +17,7 @@ object Main extends IOApp {
   def stream[F[_] : ConcurrentEffect : Applicative : ContextShift]: Stream[F, ExitCode] =
     for {
       mod <- Stream.eval(new Http4sModule(jdbc).pure[F])
-      _ <- Stream.eval(mod.init().adaptError { case e => new RuntimeException("Failed to initialize Trips module", e) })
+      _ <- Stream.eval(mod.init().adaptError { case e => new RuntimeException("Failed to initialize Cats module", e) })
 
       apiV1App = mod.routes.orNotFound
       finalHttpApp = Logger(logHeaders = true, logBody = true)(apiV1App)
